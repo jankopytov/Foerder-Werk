@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Förderwerk · Setter Qualifizierungs-Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f7f9fc;
+  --surface-2: #eef3fa;
+  --line: #d8e2ee;
+  --ink: #0a1424;
+  --ink-2: #1f2d44;
+  --mute: #5a6b85;
+  --dim: #9aa8bf;
+  --accent: #1d4ed8;
+  --accent-bright: #2563eb;
+  --accent-deep: #0a3aa8;
+  --accent-soft: #dbeafe;
+  --wrong: #b91c1c;
+  --wrong-soft: #fee2e2;
+  --right: #15803d;
+  --right-soft: #dcfce7;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter Tight', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.55;
+  font-size: 15px;
+  min-height: 100vh;
+}
+.shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+@media (max-width: 700px) {
+  .shell { padding: 32px 18px 64px; }
+}
+
+/* HERO */
+.hero { margin-bottom: 40px; }
+.hero-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: clamp(36px, 6vw, 60px);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin-bottom: 16px;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero p {
+  font-size: 17px;
+  color: var(--mute);
+}
+.hero p strong { color: var(--ink); font-weight: 500; }
+
+/* INFO BAR */
+.info {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.info-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.info ul { padding-left: 16px; }
+.info li { margin-bottom: 4px; }
+.info strong { color: var(--accent); }
+
+/* START FORM */
+.start-form {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+.field-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.field-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-family: 'Inter Tight', sans-serif;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+  transition: border 0.2s;
+}
+.field-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-deep); transform: translateY(-1px); }
+.btn-primary:disabled {
+  background: var(--dim);
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.btn-ghost:hover { background: var(--accent-soft); }
+
+/* PROGRESS */
+.progress-wrap {
+  margin-bottom: 32px;
+}
+.progress-bar {
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.progress-meta strong { color: var(--accent); }
+
+/* QUESTION CARD */
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+.q-cat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.q-text {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.q-multi-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  background: var(--accent-soft);
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* OPTIONS */
+.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.option {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--bg);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 15px;
+}
+.option:hover { border-color: var(--accent); background: var(--accent-soft); }
+.option.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.option-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--dim);
+  border-radius: 5px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.option.radio .option-checkbox { border-radius: 50%; }
+.option.selected .option-checkbox {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.option.selected .option-checkbox::after {
+  content: '✓';
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.option.radio.selected .option-checkbox::after { content: ''; width: 8px; height: 8px; background: #fff; border-radius: 50%; }
+.option-text { flex: 1; line-height: 1.45; }
+
+/* ACTIONS */
+.actions { display: flex; justify-content: flex-end; gap: 12px; }
+
+/* RESULT SCREEN */
+.result {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.result-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.result.pass .result-status { color: var(--right); }
+.result.fail .result-status { color: var(--wrong); }
+.result-headline {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+.result-headline em { font-style: italic; }
+.result.pass .result-headline em { color: var(--right); }
+.result.fail .result-headline em { color: var(--wrong); }
+.result-sub {
+  font-size: 17px;
+  color: var(--mute);
+  margin-bottom: 32px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.result-score-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  .result-score-card { grid-template-columns: 1fr; gap: 20px; }
+}
+.score-stat .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 6px;
+}
+.score-stat .val {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.score-stat .val.score { color: var(--accent); }
+.score-stat .val.correct { color: var(--right); }
+.score-stat .val.wrong { color: var(--wrong); }
+
+/* CERT */
+.cert {
+  background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 36px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.cert-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.cert-name {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.cert-text {
+  font-size: 16px;
+  color: var(--ink-2);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+.cert-text strong { color: var(--accent); }
+.cert-code {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 12px 20px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.cert-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* REVIEW */
+.review-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+.review-sub {
+  font-size: 14px;
+  color: var(--mute);
+  margin-bottom: 24px;
+}
+.review-item {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--wrong);
+}
+.review-item-q {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.review-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--wrong);
+  font-weight: 700;
+  margin-right: 8px;
+}
+.review-block { margin-top: 12px; }
+.review-block-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.review-block-lbl.your { color: var(--wrong); }
+.review-block-lbl.correct { color: var(--right); }
+.review-block-content {
+  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+.review-block-content.wrong { background: var(--wrong-soft); color: var(--wrong); }
+.review-block-content.right { background: var(--right-soft); color: var(--right); }
+
+.actions-bottom {
+  margin-top: 32px;
+  text-align: center;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* HIDDEN */
+.hidden { display: none !important; }
+
+@media print {
+  body { background: white; }
+  .question-card, .cert, .info, .result-score-card, .review-item, .start-form {
+    background: white; border-color: #ccc;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ═══════════════════════════════════════════
+       WELCOME SCREEN
+       ═══════════════════════════════════════════ -->
+  <div id="screen-welcome">
+    <header class="hero">
+      <div class="hero-tag">Förderwerk · Setter Qualifizierungs-Test · V1</div>
+      <h1>Setter <em>Test</em></h1>
+      <p>Dieser Test prüft, ob du <strong>am Montag um 12 Uhr bereit für deinen ersten Call</strong> bist. <strong>Nur wer 100 % schafft, ist qualifiziert.</strong> Bei Fehlern: Test wiederholen.</p>
+    </header>
+
+    <div class="info">
+      <div class="info-title">⚡ So läuft der Test</div>
+      <ul>
+        <li><strong>28 Fragen</strong> aus 7 Bereichen: QCG · Kill-Filter · Techcademy · Setter Flow · Pflicht-Info · Einwände · Regelbuch</li>
+        <li><strong>Single Choice</strong> oder <strong>Mehrfach-Auswahl</strong> — bei Mehrfach: ALLE richtigen Antworten anklicken</li>
+        <li>Kein Zurück — wer eine Antwort lockt, kann sie nicht ändern</li>
+        <li>Am Ende: dein Score. <strong>100 % = qualifiziert</strong>, alles darunter = nochmal von vorn</li>
+        <li>Bei 100 %: <strong>Screenshot deines Zertifikats</strong> machen und an Teamleitung schicken</li>
+      </ul>
+    </div>
+
+    <div class="start-form">
+      <div class="field-lbl">Dein Name (für das Zertifikat)</div>
+      <input type="text" id="user-name" class="field-input" placeholder="Max Mustermann" autocomplete="off">
+    </div>
+
+    <button class="btn btn-primary" id="btn-start" disabled>Test starten →</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       QUESTION SCREEN
+       ═══════════════════════════════════════════ -->
+  <div id="screen-question" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-meta">
+        <span>Frage <strong id="q-current">1</strong> / <strong id="q-total">28</strong></span>
+        <span id="q-section">QCG GRUNDLAGEN</span>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="q-cat" id="q-cat-label">Kategorie · 01</div>
+      <div class="q-text" id="q-text">Frage hier</div>
+      <div class="q-multi-note hidden" id="q-multi">⚡ Mehrere Antworten möglich</div>
+      <div class="options" id="q-options"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="btn-next" disabled>Weiter →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       RESULT SCREEN
+       ═══════════════════════════════════════════ -->
+  <div id="screen-result" class="hidden">
+    <div class="result" id="result-block">
+      <div class="result-status" id="result-status">– Status –</div>
+      <div class="result-headline"><em id="result-headline">–</em></div>
+      <div class="result-sub" id="result-sub">–</div>
+    </div>
+
+    <div class="result-score-card">
+      <div class="score-stat">
+        <div class="lbl">Score</div>
+        <div class="val score" id="stat-score">0 %</div>
+      </div>
+      <div class="score-stat">
+        <div class="lbl">Richtig</div>
+        <div class="val correct" id="stat-correct">0</div>
+      </div>
+      <div class="score-stat">
+        <div class="lbl">Falsch</div>
+        <div class="val wrong" id="stat-wrong">0</div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATE (only on pass) -->
+    <div class="cert hidden" id="cert">
+      <div class="cert-tag">Zertifikat · Förderwerk Setter</div>
+      <div class="cert-name" id="cert-name">–</div>
+      <div class="cert-text">Hat den Setter-Qualifizierungs-Test mit <strong>100 % bestanden</strong> und ist berechtigt, ab sofort als Setter für Förderwerk tätig zu sein.</div>
+      <div class="cert-code" id="cert-code">SET-XXXX-XXXX</div>
+      <div class="cert-date" id="cert-date">–</div>
+    </div>
+
+    <!-- REVIEW (only on fail) -->
+    <div id="review" class="hidden">
+      <div class="review-title">Was du falsch hattest</div>
+      <div class="review-sub">Schau dir die richtigen Antworten an, dann starte den Test erneut. Du musst 100 % erreichen, um qualifiziert zu sein.</div>
+      <div id="review-list"></div>
+    </div>
+
+    <div class="actions-bottom">
+      <button class="btn btn-primary" id="btn-retry">↻ Test wiederholen</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// QUESTION DATABASE
+// ═══════════════════════════════════════════
+const QUESTIONS = [
+  // QCG GRUNDLAGEN (5)
+  {
+    category: "QCG Grundlagen · 01",
+    section: "QCG GRUNDLAGEN",
+    text: "Was bedeutet die Abkürzung QCG?",
+    type: "single",
+    options: [
+      "Qualitäts-Coaching-Gesetz",
+      "Qualifizierungschancengesetz",
+      "Qualifikations-Ausbildungs-Gesetz",
+      "Qualitäts-Bildungs-Gesetz"
+    ],
+    correct: [1]
+  },
+  {
+    category: "QCG Grundlagen · 02",
+    section: "QCG GRUNDLAGEN",
+    text: "Auf welchen Paragraphen basiert die QCG-Förderung im SGB III?",
+    type: "single",
+    options: [
+      "§§ 45–46 SGB III",
+      "§§ 81, 82 SGB III",
+      "§§ 102, 103 SGB III",
+      "§ 178 SGB III"
+    ],
+    correct: [1]
+  },
+  {
+    category: "QCG Grundlagen · 03",
+    section: "QCG GRUNDLAGEN",
+    text: "Wer stellt den Antrag auf QCG-Förderung?",
+    type: "single",
+    options: [
+      "Der Mitarbeiter selbst",
+      "Der Steuerberater des Unternehmens",
+      "Der Arbeitgeber (über den Arbeitgeber-Service der BA)",
+      "Der Bildungsträger"
+    ],
+    correct: [2]
+  },
+  {
+    category: "QCG Grundlagen · 04",
+    section: "QCG GRUNDLAGEN",
+    text: "Welche zwei Zuschüsse umfasst die QCG-Förderung?",
+    type: "single",
+    options: [
+      "Lehrgangskosten + Mitarbeiterprämie",
+      "Lehrgangskosten + Arbeitsentgeltzuschuss",
+      "Lohnsteuer-Erstattung + Lehrgang",
+      "Sozialabgaben-Erstattung + Reisekosten"
+    ],
+    correct: [1]
+  },
+  {
+    category: "QCG Grundlagen · 05",
+    section: "QCG GRUNDLAGEN",
+    text: "Wer beaufsichtigt das QCG?",
+    type: "single",
+    options: [
+      "Bundesministerium der Finanzen",
+      "Bundesministerium für Arbeit und Soziales (BMAS)",
+      "Bundeskanzleramt",
+      "Bundesministerium für Wirtschaft"
+    ],
+    correct: [1]
+  },
+
+  // FÖRDERQUOTEN (4)
+  {
+    category: "Förderquoten · 06",
+    section: "FÖRDERQUOTEN",
+    text: "Wie hoch ist die Förderung der Lehrgangskosten bei einem Kleinstbetrieb (unter 10 MA)?",
+    type: "single",
+    options: ["25 %", "50 %", "75 %", "100 %"],
+    correct: [3]
+  },
+  {
+    category: "Förderquoten · 07",
+    section: "FÖRDERQUOTEN",
+    text: "Wie hoch ist der Arbeitsentgeltzuschuss bei einem Betrieb mit unter 10 Mitarbeitern?",
+    type: "single",
+    options: ["25 %", "50 %", "75 %", "100 %"],
+    correct: [2]
+  },
+  {
+    category: "Förderquoten · 08",
+    section: "FÖRDERQUOTEN",
+    text: "Was passiert mit den Förderquoten, wenn eine Betriebsvereinbarung oder ein Tarifvertrag vorliegt?",
+    type: "single",
+    options: [
+      "Förderung sinkt um 5 %",
+      "Förderung erhöht sich um jeweils 5 %",
+      "Förderung verdoppelt sich",
+      "Hat keinen Einfluss"
+    ],
+    correct: [1]
+  },
+  {
+    category: "Förderquoten · 09",
+    section: "FÖRDERQUOTEN",
+    text: "Welche Förderquoten (Lehrgang / Arbeitsentgelt) gelten für einen Mittelständler mit 250–2.499 MA?",
+    type: "single",
+    options: [
+      "100 % / 75 %",
+      "50 % / 50 %",
+      "25 % / 25 %",
+      "15 % / 25 %"
+    ],
+    correct: [2]
+  },
+
+  // KILL-FILTER (5)
+  {
+    category: "Kill-Filter · 10",
+    section: "KILL-FILTER",
+    text: "Welche Personen können NICHT über QCG gefördert werden? (Mehrfach-Auswahl)",
+    type: "multi",
+    options: [
+      "Minijobber",
+      "Vollzeitbeschäftigte",
+      "Werkstudenten",
+      "Teilzeitbeschäftigte",
+      "Auszubildende in laufender Ausbildung",
+      "Geschäftsführer, die zugleich (Allein-)Gesellschafter sind"
+    ],
+    correct: [0, 2, 4, 5]
+  },
+  {
+    category: "Kill-Filter · 11",
+    section: "KILL-FILTER",
+    text: "Wie lange muss die letzte Berufsausbildung in der Regel zurückliegen?",
+    type: "single",
+    options: [
+      "Mindestens 6 Monate",
+      "Mindestens 1 Jahr",
+      "Mindestens 2 Jahre",
+      "Mindestens 5 Jahre"
+    ],
+    correct: [2]
+  },
+  {
+    category: "Kill-Filter · 12",
+    section: "KILL-FILTER",
+    text: "Was passiert, wenn die Maßnahme bereits begonnen hat, bevor der Antrag bei der BA liegt?",
+    type: "single",
+    options: [
+      "Antrag kann nachträglich gestellt werden",
+      "Es gibt eine reduzierte Förderung",
+      "Antrag wird abgelehnt — hartes No-Go",
+      "Die Förderung läuft trotzdem normal"
+    ],
+    correct: [2]
+  },
+  {
+    category: "Kill-Filter · 13",
+    section: "KILL-FILTER",
+    text: "Welche Maßnahme ist NICHT QCG-förderfähig?",
+    type: "single",
+    options: [
+      "AZAV-zertifizierter KI-Marketing-Kurs mit 600 UE",
+      "Firmeninternes Onboarding mit firmenspezifischer Software",
+      "Berufsbegleitender Online-Kurs in HR-Management",
+      "Weiterbildung im Bereich Vorbereitende Buchhaltung"
+    ],
+    correct: [1]
+  },
+  {
+    category: "Kill-Filter · 14",
+    section: "KILL-FILTER",
+    text: "Wie viele Unterrichtseinheiten (UE) muss eine QCG-Maßnahme mindestens umfassen?",
+    type: "single",
+    options: ["40 UE", "60 UE", "80 UE", "120 UE"],
+    correct: [3]
+  },
+
+  // TECHCADEMY (3)
+  {
+    category: "Techcademy · 15",
+    section: "TECHCADEMY",
+    text: "Wie lange dauert eine Techcademy-Maßnahme typischerweise?",
+    type: "single",
+    options: ["8 Wochen", "20 Wochen", "ca. 40 Wochen", "52 Wochen"],
+    correct: [2]
+  },
+  {
+    category: "Techcademy · 16",
+    section: "TECHCADEMY",
+    text: "Wie viel Lernzeit pro Tag wird für Techcademy-Maßnahmen empfohlen?",
+    type: "single",
+    options: [
+      "0,5 h",
+      "1–1,5 h",
+      "3–4 h",
+      "6–8 h (Vollzeit-Freistellung)"
+    ],
+    correct: [1]
+  },
+  {
+    category: "Techcademy · 17",
+    section: "TECHCADEMY",
+    text: "Welche der folgenden ist KEINE Techcademy-Spezialisierung?",
+    type: "single",
+    options: [
+      "KI-HR Manager",
+      "KI-Marketing Manager",
+      "KI-Vertriebs Manager",
+      "KI-Kundenservice Manager"
+    ],
+    correct: [2]
+  },
+
+  // SETTER FLOW (4)
+  {
+    category: "Setter Flow · 18",
+    section: "SETTER FLOW",
+    text: "Welche Schritte musst du IMMER durchgehen, bevor du den Termin buchst? (Mehrfach-Auswahl)",
+    type: "multi",
+    options: [
+      "Opening + Pitch",
+      "Qualify (MA-Zahlen abfragen)",
+      "Vergütungs-Transparenz (15 % im Erfolgsfall)",
+      "Persönliche Hobby-Smalltalk-Phase",
+      "Erwartungs-Setting für den Termin"
+    ],
+    correct: [0, 1, 2, 4]
+  },
+  {
+    category: "Setter Flow · 19",
+    section: "SETTER FLOW",
+    text: "Ein Lead sagt: „Ich muss noch mit meinem HR-Verantwortlichen sprechen." Was ist die richtige Reaktion?",
+    type: "single",
+    options: [
+      "„Klar, melden Sie sich nochmal wenn Sie's geklärt haben"",
+      "Name + Mail der HR-Person erfragen und beide direkt zum Termin einladen",
+      "Trotzdem Termin buchen ohne HR",
+      "„Dann ist das Thema wohl nichts für Sie""
+    ],
+    correct: [1]
+  },
+  {
+    category: "Setter Flow · 20",
+    section: "SETTER FLOW",
+    text: "Wann ist der ideale Termin-Slot für den Closer?",
+    type: "single",
+    options: [
+      "Erst nächste Woche",
+      "Morgen — so früh wie möglich",
+      "In zwei Wochen",
+      "Egal, Hauptsache irgendwann"
+    ],
+    correct: [1]
+  },
+  {
+    category: "Setter Flow · 21",
+    section: "SETTER FLOW",
+    text: "Welche Aussage zur Vergütung (15 %) ist korrekt?",
+    type: "single",
+    options: [
+      "Wird vorab fällig",
+      "Wird auch fällig, wenn der Antrag abgelehnt wird",
+      "Nur im Erfolgsfall — wenn das Geld tatsächlich beim Kunden ankommt",
+      "Wird vom Bildungsträger bezahlt"
+    ],
+    correct: [2]
+  },
+
+  // PFLICHT-INFO (2)
+  {
+    category: "Pflicht-Info · 22",
+    section: "PFLICHT-INFO",
+    text: "Welche Pflicht-Informationen muss der Setter IMMER abfragen? (Mehrfach-Auswahl)",
+    type: "multi",
+    options: [
+      "Firmenname mit Rechtsform",
+      "Anzahl Mitarbeiter Vollzeit",
+      "MA in Büro / Verwaltung / Digital",
+      "Privates Hobby des Geschäftsführers",
+      "Alleiniger Entscheider ja/nein",
+      "Aktive Ausbildung im Unternehmen?"
+    ],
+    correct: [0, 1, 2, 4, 5]
+  },
+  {
+    category: "Pflicht-Info · 23",
+    section: "PFLICHT-INFO",
+    text: "Telefonnummer und E-Mail-Adresse des Leads…",
+    type: "single",
+    options: [
+      "Müssen jedes Mal neu abgefragt werden",
+      "Kommen aus dem Lead-Intake — nicht nochmal fragen",
+      "Werden nur bei „interessanten" Leads erfasst",
+      "Sind nicht wichtig für die CRM-Übergabe"
+    ],
+    correct: [1]
+  },
+
+  // EINWAND-BEHANDLUNG (3)
+  {
+    category: "Einwände · 24",
+    section: "EINWAND-BEHANDLUNG",
+    text: "Lead sagt: „Schicken Sie mir das mal per Mail." Was ist die richtige Reaktion?",
+    type: "single",
+    options: [
+      "Sofort Mail schicken und Call beenden",
+      "Anerkennen + reframen: „Eine generische PDF hilft Ihnen nicht — im Termin sehen Sie IHRE konkrete Summe. Wann passt morgen?"",
+      "„Mail haben wir nicht, Sie müssen einen Termin machen"",
+      "Auflegen ohne Antwort"
+    ],
+    correct: [1]
+  },
+  {
+    category: "Einwände · 25",
+    section: "EINWAND-BEHANDLUNG",
+    text: "Lead sagt: „Klingt zu schön um wahr zu sein." Wie reagierst du?",
+    type: "single",
+    options: [
+      "Widersprechen: „Nein, ist wirklich super einfach"",
+      "Anerkennen + Transparenz: „Verstehe ich. Der Haken ist: es gibt keinen. 15 % nur im Erfolgsfall, sonst null."",
+      "Den Call abbrechen, Lead ist verloren",
+      "Garantien geben („zu 100 % bewilligt")"
+    ],
+    correct: [1]
+  },
+  {
+    category: "Einwände · 26",
+    section: "EINWAND-BEHANDLUNG",
+    text: "Wenn ein Einwand zweimal vom Lead kommt — was bedeutet das?",
+    type: "single",
+    options: [
+      "Ich muss härter pushen",
+      "Es ist ein echtes Nein — höflich beenden, nicht reinziehen",
+      "Ich muss länger und ausführlicher erklären",
+      "Ich muss die Vergütung senken"
+    ],
+    correct: [1]
+  },
+
+  // CODE OF CONDUCT (2)
+  {
+    category: "Regelbuch · 27",
+    section: "REGELBUCH",
+    text: "Du bist krank am Montagmorgen. Was tust du?",
+    type: "single",
+    options: [
+      "Erstmal abwarten, vielleicht geht's später",
+      "Während der Schicht eine WhatsApp schicken",
+      "Sofort vor Schichtbeginn melden, damit Ersatz organisiert werden kann",
+      "Einen Kollegen bitten, später Bescheid zu sagen"
+    ],
+    correct: [2]
+  },
+  {
+    category: "Regelbuch · 28",
+    section: "REGELBUCH",
+    text: "Welche Handlungen führen zur sofortigen Trennung? (Mehrfach-Auswahl)",
+    type: "multi",
+    options: [
+      "Skripte oder Lead-Daten extern teilen",
+      "Erfundene Calls oder geschönte Zahlen melden",
+      "Im Team lästern und Toxizität verbreiten",
+      "Einen einzelnen Termin verlieren",
+      "Einen schlechten Tag haben",
+      "Falsche Antworten an Leads geben statt ehrlich „weiß ich nicht" zu sagen"
+    ],
+    correct: [0, 1, 2]
+  }
+];
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let state = {
+  userName: "",
+  current: 0,
+  answers: [],
+  selected: []
+};
+
+// ═══════════════════════════════════════════
+// DOM
+// ═══════════════════════════════════════════
+const $ = id => document.getElementById(id);
+
+const screens = {
+  welcome: $('screen-welcome'),
+  question: $('screen-question'),
+  result: $('screen-result')
+};
+
+function showScreen(name) {
+  Object.values(screens).forEach(s => s.classList.add('hidden'));
+  screens[name].classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════
+// START
+// ═══════════════════════════════════════════
+$('user-name').addEventListener('input', e => {
+  $('btn-start').disabled = e.target.value.trim().length < 2;
+});
+
+$('btn-start').addEventListener('click', () => {
+  state.userName = $('user-name').value.trim();
+  state.current = 0;
+  state.answers = [];
+  state.selected = [];
+  showQuestion();
+  showScreen('question');
+});
+
+// ═══════════════════════════════════════════
+// QUESTION DISPLAY
+// ═══════════════════════════════════════════
+function showQuestion() {
+  const q = QUESTIONS[state.current];
+  state.selected = [];
+
+  $('q-current').textContent = state.current + 1;
+  $('q-total').textContent = QUESTIONS.length;
+  $('q-section').textContent = q.section;
+  $('q-cat-label').textContent = q.category;
+  $('q-text').textContent = q.text;
+
+  if (q.type === 'multi') {
+    $('q-multi').classList.remove('hidden');
+  } else {
+    $('q-multi').classList.add('hidden');
+  }
+
+  const fillPct = ((state.current) / QUESTIONS.length) * 100;
+  $('progress-fill').style.width = fillPct + '%';
+
+  // Render options
+  const opts = $('q-options');
+  opts.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const el = document.createElement('div');
+    el.className = 'option' + (q.type === 'single' ? ' radio' : '');
+    el.dataset.index = i;
+    el.innerHTML = `<div class="option-checkbox"></div><div class="option-text">${opt}</div>`;
+    el.addEventListener('click', () => toggleOption(i, q.type));
+    opts.appendChild(el);
+  });
+
+  $('btn-next').disabled = true;
+  $('btn-next').textContent = state.current === QUESTIONS.length - 1 ? 'Test beenden →' : 'Weiter →';
+}
+
+function toggleOption(index, type) {
+  const opts = $('q-options').children;
+
+  if (type === 'single') {
+    state.selected = [index];
+    Array.from(opts).forEach((o, i) => {
+      o.classList.toggle('selected', i === index);
+    });
+  } else {
+    const idx = state.selected.indexOf(index);
+    if (idx >= 0) state.selected.splice(idx, 1);
+    else state.selected.push(index);
+    Array.from(opts).forEach((o, i) => {
+      o.classList.toggle('selected', state.selected.includes(i));
+    });
+  }
+
+  $('btn-next').disabled = state.selected.length === 0;
+}
+
+$('btn-next').addEventListener('click', () => {
+  // Lock answer
+  state.answers.push([...state.selected]);
+
+  if (state.current < QUESTIONS.length - 1) {
+    state.current++;
+    showQuestion();
+  } else {
+    showResult();
+  }
+});
+
+// ═══════════════════════════════════════════
+// RESULT
+// ═══════════════════════════════════════════
+function showResult() {
+  let correct = 0;
+  const wrong = [];
+
+  state.answers.forEach((answer, i) => {
+    const q = QUESTIONS[i];
+    const isCorrect = arraysEqual(answer.sort(), [...q.correct].sort());
+    if (isCorrect) correct++;
+    else wrong.push({ index: i, given: answer, q });
+  });
+
+  const total = QUESTIONS.length;
+  const pct = Math.round((correct / total) * 100);
+  const passed = pct === 100;
+
+  // Update stats
+  $('stat-score').textContent = pct + ' %';
+  $('stat-correct').textContent = correct;
+  $('stat-wrong').textContent = total - correct;
+  $('progress-fill').style.width = '100%';
+
+  // Update headline
+  const resultBlock = $('result-block');
+  resultBlock.classList.remove('pass', 'fail');
+  resultBlock.classList.add(passed ? 'pass' : 'fail');
+
+  if (passed) {
+    $('result-status').textContent = '✓ Bestanden';
+    $('result-headline').textContent = 'Qualifiziert.';
+    $('result-sub').textContent = 'Du bist bereit für deinen ersten Call am Montag. Mach einen Screenshot deines Zertifikats und schicke ihn an die Teamleitung.';
+
+    $('cert').classList.remove('hidden');
+    $('review').classList.add('hidden');
+
+    $('cert-name').textContent = state.userName;
+    $('cert-code').textContent = generateCode(state.userName);
+    $('cert-date').textContent = formatDate(new Date());
+  } else {
+    $('result-status').textContent = '✗ Noch nicht qualifiziert';
+    $('result-headline').textContent = 'Nochmal.';
+    $('result-sub').textContent = 'Du brauchst 100 % um qualifiziert zu sein. Schau dir die falschen Antworten an, geh die Unterlagen nochmal durch und starte den Test erneut.';
+
+    $('cert').classList.add('hidden');
+    $('review').classList.remove('hidden');
+
+    renderReview(wrong);
+  }
+
+  showScreen('result');
+}
+
+function renderReview(wrong) {
+  const list = $('review-list');
+  list.innerHTML = '';
+  wrong.forEach(w => {
+    const q = w.q;
+    const yourAnswers = w.given.map(i => q.options[i]).join(' · ');
+    const correctAnswers = q.correct.map(i => q.options[i]).join(' · ');
+
+    const el = document.createElement('div');
+    el.className = 'review-item';
+    el.innerHTML = `
+      <div class="review-item-q"><span class="review-num">Frage ${w.index + 1}</span>${q.text}</div>
+      <div class="review-block">
+        <div class="review-block-lbl your">Deine Antwort</div>
+        <div class="review-block-content wrong">${yourAnswers || '(keine Auswahl)'}</div>
+      </div>
+      <div class="review-block">
+        <div class="review-block-lbl correct">Richtig wäre</div>
+        <div class="review-block-content right">${correctAnswers}</div>
+      </div>
+    `;
+    list.appendChild(el);
+  });
+}
+
+function arraysEqual(a, b) {
+  if (a.length !== b.length) return false;
+  return a.every((v, i) => v === b[i]);
+}
+
+function generateCode(name) {
+  // Simple deterministic hash
+  let h1 = 0, h2 = 0;
+  const seed = name + new Date().toDateString();
+  for (let i = 0; i < seed.length; i++) {
+    h1 = ((h1 << 5) - h1 + seed.charCodeAt(i)) | 0;
+    h2 = ((h2 << 3) + h2 + seed.charCodeAt(i)) | 0;
+  }
+  const part1 = Math.abs(h1).toString(36).substring(0, 4).toUpperCase().padEnd(4, 'X');
+  const part2 = Math.abs(h2).toString(36).substring(0, 4).toUpperCase().padEnd(4, 'X');
+  return `SET-${part1}-${part2}`;
+}
+
+function formatDate(d) {
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  const h = String(d.getHours()).padStart(2, '0');
+  const m = String(d.getMinutes()).padStart(2, '0');
+  return `${day}.${month}.${year} · ${h}:${m} Uhr`;
+}
+
+// ═══════════════════════════════════════════
+// RETRY
+// ═══════════════════════════════════════════
+$('btn-retry').addEventListener('click', () => {
+  state.current = 0;
+  state.answers = [];
+  state.selected = [];
+  showQuestion();
+  showScreen('question');
+});
+
+</script>
+
+</body>
+</html>
