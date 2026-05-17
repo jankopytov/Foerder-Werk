@@ -6,7 +6,7 @@
 <title>Förderwerk · Setter Qualifizierungs-Test</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #ffffff;
@@ -25,6 +25,16 @@
   --wrong-soft: #fee2e2;
   --right: #15803d;
   --right-soft: #dcfce7;
+  /* Cert-specific tokens */
+  --cert-paper: #f4f1ea;
+  --cert-paper-deep: #ebe7dc;
+  --cert-ink: #0a0a0f;
+  --cert-ink-soft: #1f1f24;
+  --cert-ink-mute: #5a5a62;
+  --cert-hairline: #c8c2b2;
+  --cert-accent: #1e40af;
+  --cert-accent-light: #8fa9e0;
+  --cert-gold: #b89968;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -243,6 +253,97 @@ body {
   border-color: var(--accent);
   background: var(--accent-soft);
 }
+
+/* Reveal states - after locking the answer */
+.option.locked { cursor: default; }
+.option.reveal-correct {
+  border-color: var(--right);
+  background: var(--right-soft);
+}
+.option.reveal-correct .option-checkbox {
+  border-color: var(--right);
+  background: var(--right);
+}
+.option.reveal-correct .option-checkbox::after {
+  content: '✓';
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.option.reveal-correct.radio .option-checkbox::after { content: '✓'; width: auto; height: auto; background: transparent; }
+.option.reveal-wrong {
+  border-color: var(--wrong);
+  background: var(--wrong-soft);
+  opacity: 0.85;
+}
+.option.reveal-wrong .option-checkbox {
+  border-color: var(--wrong);
+  background: var(--wrong);
+}
+.option.reveal-wrong .option-checkbox::after {
+  content: '✗';
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.option.reveal-wrong.radio .option-checkbox::after { content: '✗'; width: auto; height: auto; background: transparent; }
+.option.locked:hover { transform: none; }
+
+/* Feedback banner */
+.feedback {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  animation: slideIn 0.3s ease-out;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.feedback.correct {
+  background: var(--right-soft);
+  color: var(--right);
+  border: 1px solid var(--right);
+}
+.feedback.wrong {
+  background: var(--wrong-soft);
+  color: var(--wrong);
+  border: 1px solid var(--wrong);
+}
+.feedback-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.feedback.correct .feedback-icon { background: var(--right); }
+.feedback.wrong .feedback-icon { background: var(--wrong); }
+.feedback-text { flex: 1; }
+.feedback-text .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+.feedback-text #fb-text {
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+}
 .option-checkbox {
   width: 22px;
   height: 22px;
@@ -340,57 +441,299 @@ body {
 .score-stat .val.correct { color: var(--right); }
 .score-stat .val.wrong { color: var(--wrong); }
 
-/* CERT */
+/* ═══════════════════════════════════════════════════
+   PREMIUM CERTIFICATE
+   ═══════════════════════════════════════════════════ */
 .cert {
-  background: linear-gradient(135deg, var(--accent-soft), var(--surface));
-  border: 2px solid var(--accent);
-  border-radius: 16px;
-  padding: 36px;
-  text-align: center;
+  background: var(--cert-paper);
+  color: var(--cert-ink);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 1 / 1.15;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.05),
+    0 40px 60px -15px rgba(0,0,0,0.15),
+    0 20px 30px -10px rgba(0,0,0,0.1);
   margin-bottom: 32px;
+  text-align: left;
+  padding: 0;
 }
-.cert-tag {
+.cert::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(30, 64, 175, 0.05), transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(184, 153, 104, 0.04), transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+.cert::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(10, 10, 15, 0.012) 39px,
+      rgba(10, 10, 15, 0.012) 40px
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cert .ornament {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+.cert .ornament.tl { top: 18px; left: 18px; }
+.cert .ornament.tr { top: 18px; right: 18px; transform: scaleX(-1); }
+.cert .ornament.bl { bottom: 18px; left: 18px; transform: scaleY(-1); }
+.cert .ornament.br { bottom: 18px; right: 18px; transform: scale(-1, -1); }
+.cert .ornament svg {
+  width: 36px;
+  height: 36px;
+  color: var(--cert-accent);
+  opacity: 0.6;
+}
+
+.cert-head {
+  padding: 8% 8% 4%;
+  border-bottom: 0.5px solid var(--cert-ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  position: relative;
+  z-index: 3;
+}
+.cert-logo {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.cert-logo .name { color: var(--cert-ink); }
+.cert-logo .name i { font-style: italic; color: var(--cert-accent); }
+.cert-logo .dot {
+  width: 4px;
+  height: 4px;
+  background: var(--cert-accent);
+  border-radius: 50%;
+  margin: 0 4px;
+  vertical-align: 3px;
+}
+.cert-logo .sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cert-ink-mute);
+}
+.cert-head-r {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cert-ink-mute);
+  text-align: right;
+  line-height: 1.7;
+}
+.cert-head-r strong { color: var(--cert-ink); font-weight: 700; }
+
+.cert-body {
+  padding: 8% 8% 6%;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.cert-kicker {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--cert-accent);
   font-weight: 700;
-  margin-bottom: 14px;
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
+.cert-kicker::before,
+.cert-kicker::after {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--cert-accent);
+}
+
+.cert-title {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(18px, 2.2vw, 22px);
+  color: var(--cert-ink-mute);
+  margin-bottom: 4%;
+  letter-spacing: -0.01em;
+}
+
 .cert-name {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(24px, 4vw, 36px);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 8px;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 500;
+  font-size: clamp(34px, 5.5vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--cert-ink);
+  margin-bottom: 5%;
+  padding-bottom: 4%;
+  border-bottom: 1px solid var(--cert-ink);
+  max-width: 88%;
 }
-.cert-text {
-  font-size: 16px;
-  color: var(--ink-2);
-  margin-bottom: 24px;
+
+.cert-statement {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(13px, 1.5vw, 15px);
   line-height: 1.5;
+  color: var(--cert-ink-soft);
+  max-width: 78%;
+  margin-bottom: 6%;
+  letter-spacing: -0.005em;
 }
-.cert-text strong { color: var(--accent); }
-.cert-code {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  background: var(--bg);
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  padding: 12px 20px;
-  color: var(--accent);
-  margin-bottom: 20px;
+.cert-statement strong {
+  color: var(--cert-accent);
+  font-style: normal;
+  font-weight: 600;
 }
-.cert-date {
+
+.cert-seal {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 5%;
+}
+.cert-seal-ring {
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid var(--cert-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.cert-seal-ring::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 0.5px solid var(--cert-accent);
+  border-radius: 50%;
+  opacity: 0.4;
+}
+.cert-seal-inner {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--cert-accent);
+  line-height: 1;
+}
+
+.cert-meta-row {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0;
+  width: 100%;
+  max-width: 92%;
+  padding-top: 4%;
+  border-top: 1px solid var(--cert-hairline);
+}
+.cert-meta-cell {
+  text-align: center;
+  padding: 0 4%;
+}
+.cert-meta-cell .lbl {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  font-size: 9px;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--mute);
+  color: var(--cert-ink-mute);
+  margin-bottom: 6px;
+}
+.cert-meta-cell .val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--cert-ink);
+  font-weight: 700;
+}
+.cert-meta-cell .val.italic {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--cert-accent);
+  font-size: 16px;
+}
+.cert-meta-divider {
+  background: var(--cert-hairline);
+  width: 1px;
+}
+
+.cert-foot {
+  background: var(--cert-ink);
+  color: var(--cert-paper);
+  padding: 5% 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+}
+.cert-foot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--cert-accent-light), transparent);
+  opacity: 0.4;
+}
+.cert-foot-l {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(244, 241, 234, 0.5);
+  line-height: 1.7;
+}
+.cert-foot-l strong { color: var(--cert-paper); font-weight: 700; }
+.cert-foot-r {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--cert-paper);
+  letter-spacing: -0.01em;
+}
+.cert-foot-r .sig {
+  font-size: 18px;
+  color: var(--cert-accent-light);
 }
 
 /* REVIEW */
@@ -485,7 +828,7 @@ body {
     <div class="info">
       <div class="info-title">⚡ So läuft der Test</div>
       <ul>
-        <li><strong>28 Fragen</strong> aus 7 Bereichen: QCG · Kill-Filter · Techcademy · Setter Flow · Pflicht-Info · Einwände · Regelbuch</li>
+        <li><strong>25 Fragen</strong> aus 7 Bereichen: QCG · Kill-Filter · Techcademy · Setter Flow · Pflicht-Info · Einwände · Regelbuch</li>
         <li><strong>Single Choice</strong> oder <strong>Mehrfach-Auswahl</strong> — bei Mehrfach: ALLE richtigen Antworten anklicken</li>
         <li>Kein Zurück — wer eine Antwort lockt, kann sie nicht ändern</li>
         <li>Am Ende: dein Score. <strong>100 % = qualifiziert</strong>, alles darunter = nochmal von vorn</li>
@@ -508,7 +851,7 @@ body {
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
       <div class="progress-meta">
-        <span>Frage <strong id="q-current">1</strong> / <strong id="q-total">28</strong></span>
+        <span>Frage <strong id="q-current">1</strong> / <strong id="q-total">25</strong></span>
         <span id="q-section">QCG GRUNDLAGEN</span>
       </div>
     </div>
@@ -518,10 +861,17 @@ body {
       <div class="q-text" id="q-text">Frage hier</div>
       <div class="q-multi-note hidden" id="q-multi">⚡ Mehrere Antworten möglich</div>
       <div class="options" id="q-options"></div>
+      <div class="feedback hidden" id="q-feedback">
+        <div class="feedback-icon" id="fb-icon">✓</div>
+        <div class="feedback-text">
+          <span class="lbl" id="fb-label">Richtig</span>
+          <span id="fb-text">Weiter zur nächsten Frage.</span>
+        </div>
+      </div>
     </div>
 
     <div class="actions">
-      <button class="btn btn-primary" id="btn-next" disabled>Weiter →</button>
+      <button class="btn btn-primary" id="btn-next" disabled>Antwort prüfen</button>
     </div>
   </div>
 
@@ -552,22 +902,65 @@ body {
 
     <!-- CERTIFICATE (only on pass) -->
     <div class="cert hidden" id="cert">
-      <div class="cert-tag">Zertifikat · Förderwerk Setter</div>
-      <div class="cert-name" id="cert-name">–</div>
-      <div class="cert-text">Hat den Setter-Qualifizierungs-Test mit <strong>100 % bestanden</strong> und ist berechtigt, ab sofort als Setter für Förderwerk tätig zu sein.</div>
-      <div class="cert-code" id="cert-code">SET-XXXX-XXXX</div>
-      <div class="cert-date" id="cert-date">–</div>
-    </div>
+      <!-- Corner ornaments -->
+      <div class="ornament tl"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="0.6"><line x1="0" y1="0" x2="36" y2="0"/><line x1="0" y1="0" x2="0" y2="36"/><line x1="8" y1="8" x2="20" y2="8"/><line x1="8" y1="8" x2="8" y2="20"/></svg></div>
+      <div class="ornament tr"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="0.6"><line x1="0" y1="0" x2="36" y2="0"/><line x1="0" y1="0" x2="0" y2="36"/><line x1="8" y1="8" x2="20" y2="8"/><line x1="8" y1="8" x2="8" y2="20"/></svg></div>
+      <div class="ornament bl"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="0.6"><line x1="0" y1="0" x2="36" y2="0"/><line x1="0" y1="0" x2="0" y2="36"/><line x1="8" y1="8" x2="20" y2="8"/><line x1="8" y1="8" x2="8" y2="20"/></svg></div>
+      <div class="ornament br"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="0.6"><line x1="0" y1="0" x2="36" y2="0"/><line x1="0" y1="0" x2="0" y2="36"/><line x1="8" y1="8" x2="20" y2="8"/><line x1="8" y1="8" x2="8" y2="20"/></svg></div>
 
-    <!-- REVIEW (only on fail) -->
-    <div id="review" class="hidden">
-      <div class="review-title">Was du falsch hattest</div>
-      <div class="review-sub">Schau dir die richtigen Antworten an, dann starte den Test erneut. Du musst 100 % erreichen, um qualifiziert zu sein.</div>
-      <div id="review-list"></div>
+      <!-- HEAD -->
+      <div class="cert-head">
+        <div class="cert-logo">
+          <span class="name">Förder<i>werk</i></span>
+          <span class="dot"></span>
+          <span class="sub">Setter Edition</span>
+        </div>
+        <div class="cert-head-r">
+          Zertifikat &middot; № <span id="cert-no">001</span><br>
+          <strong>Gültig ab Ausstellung</strong>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="cert-body">
+        <div class="cert-kicker">Qualifizierung Bestanden</div>
+        <div class="cert-title">Hiermit wird bestätigt, dass</div>
+        <h2 class="cert-name" id="cert-name">–</h2>
+        <p class="cert-statement">den <strong>Förderwerk Setter-Qualifizierungs-Test</strong> mit <strong>100 % bestanden</strong> hat und damit als qualifizierter Setter berechtigt ist, ab sofort eigenständig Termine für Förderwerk zu vereinbaren.</p>
+
+        <div class="cert-seal">
+          <div class="cert-seal-ring">
+            <span class="cert-seal-inner">F.</span>
+          </div>
+        </div>
+
+        <div class="cert-meta-row">
+          <div class="cert-meta-cell">
+            <div class="lbl">Zertifikatscode</div>
+            <div class="val" id="cert-code">SET-XXXX-XXXX</div>
+          </div>
+          <div class="cert-meta-divider"></div>
+          <div class="cert-meta-cell">
+            <div class="lbl">Ausgestellt am</div>
+            <div class="val italic" id="cert-date">–</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOT -->
+      <div class="cert-foot">
+        <div class="cert-foot-l">
+          Förderwerk &middot; Setter Operating System<br>
+          <strong>foerderwerk.de</strong>
+        </div>
+        <div class="cert-foot-r">
+          <span class="sig">Förder<em>werk</em></span>
+        </div>
+      </div>
     </div>
 
     <div class="actions-bottom">
-      <button class="btn btn-primary" id="btn-retry">↻ Test wiederholen</button>
+      <button class="btn btn-primary" id="btn-retry">↻ Test komplett neu starten</button>
     </div>
   </div>
 
@@ -590,23 +983,11 @@ const QUESTIONS = [
       "Qualifikations-Ausbildungs-Gesetz",
       "Qualitäts-Bildungs-Gesetz"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Qualifizierungschancengesetz — der offizielle Name. Die Rechtsgrundlage sind §§ 81 und 82 SGB III, beaufsichtigt vom BMAS. Wenn ein Lead nach der gesetzlichen Basis fragt, kommt genau diese Antwort: »Qualifizierungschancengesetz, §§ 81/82 SGB III.« Das schafft sofort Glaubwürdigkeit."
   },
   {
     category: "QCG Grundlagen · 02",
-    section: "QCG GRUNDLAGEN",
-    text: "Auf welchen Paragraphen basiert die QCG-Förderung im SGB III?",
-    type: "single",
-    options: [
-      "§§ 45–46 SGB III",
-      "§§ 81, 82 SGB III",
-      "§§ 102, 103 SGB III",
-      "§ 178 SGB III"
-    ],
-    correct: [1]
-  },
-  {
-    category: "QCG Grundlagen · 03",
     section: "QCG GRUNDLAGEN",
     text: "Wer stellt den Antrag auf QCG-Förderung?",
     type: "single",
@@ -616,10 +997,11 @@ const QUESTIONS = [
       "Der Arbeitgeber (über den Arbeitgeber-Service der BA)",
       "Der Bildungsträger"
     ],
-    correct: [2]
+    correct: [2],
+    explain: "Der Arbeitgeber stellt den Antrag — über den Arbeitgeber-Service der Agentur für Arbeit. Nicht der Mitarbeiter, nicht der Steuerberater, nicht der Bildungsträger. Wir bei Förderwerk bereiten den Antrag vor und reichen ihn im Namen des Arbeitgebers ein."
   },
   {
-    category: "QCG Grundlagen · 04",
+    category: "QCG Grundlagen · 03",
     section: "QCG GRUNDLAGEN",
     text: "Welche zwei Zuschüsse umfasst die QCG-Förderung?",
     type: "single",
@@ -629,10 +1011,11 @@ const QUESTIONS = [
       "Lohnsteuer-Erstattung + Lehrgang",
       "Sozialabgaben-Erstattung + Reisekosten"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Lehrgangskostenzuschuss (Kursgebühren) + Arbeitsentgeltzuschuss (Lohnzuschuss während der Maßnahme). Das sind die zwei Töpfe, die zusammen den Großteil der Kosten abdecken. Beide laufen über denselben Antrag."
   },
   {
-    category: "QCG Grundlagen · 05",
+    category: "QCG Grundlagen · 04",
     section: "QCG GRUNDLAGEN",
     text: "Wer beaufsichtigt das QCG?",
     type: "single",
@@ -642,56 +1025,47 @@ const QUESTIONS = [
       "Bundeskanzleramt",
       "Bundesministerium für Wirtschaft"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Das Bundesministerium für Arbeit und Soziales (BMAS) beaufsichtigt das Programm. Wichtig für Glaubwürdigkeit am Telefon: Es ist ein offizielles Bundesprogramm, kein Vermittler-Konstrukt."
   },
 
   // FÖRDERQUOTEN (4)
   {
+    category: "Förderquoten · 05",
+    section: "FÖRDERQUOTEN",
+    text: "Wie hoch kann die Förderung der Lehrgangskosten bei einem Kleinstbetrieb (unter 10 MA) maximal sein?",
+    type: "single",
+    options: ["bis zu 25 %", "bis zu 50 %", "bis zu 75 %", "bis zu 100 %"],
+    correct: [3],
+    explain: "Bis zu 100 % der Lehrgangskosten — das ist die OBERGRENZE bei Kleinstbetrieben. Wichtig: Es ist ein Ermessen der Agentur für Arbeit, im Einzelfall kann es auch weniger sein. Immer »BIS ZU 100 %« kommunizieren, nie als feste Zusage. Je kleiner der Betrieb, desto höher die mögliche Quote — Kleinstbetriebe sind unsere beste Zielgruppe."
+  },
+  {
     category: "Förderquoten · 06",
     section: "FÖRDERQUOTEN",
-    text: "Wie hoch ist die Förderung der Lehrgangskosten bei einem Kleinstbetrieb (unter 10 MA)?",
+    text: "Wie hoch kann der Arbeitsentgeltzuschuss bei einem Betrieb mit unter 10 Mitarbeitern maximal sein?",
     type: "single",
-    options: ["25 %", "50 %", "75 %", "100 %"],
-    correct: [3]
+    options: ["bis zu 25 %", "bis zu 50 %", "bis zu 75 %", "100 % garantiert"],
+    correct: [2],
+    explain: "Bis zu 75 % vom Bruttogehalt — das ist die OBERGRENZE bei Kleinstbetrieben unter 10 MA, nicht die feste Quote. Im Einzelfall kann der Zuschuss auch geringer ausfallen, je nach Konstellation und Ermessen der Agentur für Arbeit. Wichtig im Call: NIE »Sie bekommen 75 %« sagen, immer »BIS ZU 75 %«. Der genaue Wert wird im Termin vom Förderberater berechnet."
   },
   {
     category: "Förderquoten · 07",
     section: "FÖRDERQUOTEN",
-    text: "Wie hoch ist der Arbeitsentgeltzuschuss bei einem Betrieb mit unter 10 Mitarbeitern?",
-    type: "single",
-    options: ["25 %", "50 %", "75 %", "100 %"],
-    correct: [2]
-  },
-  {
-    category: "Förderquoten · 08",
-    section: "FÖRDERQUOTEN",
-    text: "Was passiert mit den Förderquoten, wenn eine Betriebsvereinbarung oder ein Tarifvertrag vorliegt?",
+    text: "Welche maximalen Förderquoten (Lehrgang / Arbeitsentgelt) gelten für einen Mittelständler mit 250–2.499 MA?",
     type: "single",
     options: [
-      "Förderung sinkt um 5 %",
-      "Förderung erhöht sich um jeweils 5 %",
-      "Förderung verdoppelt sich",
-      "Hat keinen Einfluss"
+      "bis 100 % / bis 75 %",
+      "bis 50 % / bis 50 %",
+      "bis 25 % / bis 25 %",
+      "bis 15 % / bis 25 %"
     ],
-    correct: [1]
-  },
-  {
-    category: "Förderquoten · 09",
-    section: "FÖRDERQUOTEN",
-    text: "Welche Förderquoten (Lehrgang / Arbeitsentgelt) gelten für einen Mittelständler mit 250–2.499 MA?",
-    type: "single",
-    options: [
-      "100 % / 75 %",
-      "50 % / 50 %",
-      "25 % / 25 %",
-      "15 % / 25 %"
-    ],
-    correct: [2]
+    correct: [2],
+    explain: "Mittelständler 250–2.499 MA bekommen BIS ZU 25 % Lehrgang und BIS ZU 25 % Arbeitsentgelt. Staffelung als Faustregel: bis 10 MA → bis 100/75, bis 250 MA → bis 50/50, bis 2.500 MA → bis 25/25, ab 2.500 MA → bis 15/25. Wichtig: Immer als Maximalwerte kommunizieren, nie als Zusage."
   },
 
   // KILL-FILTER (5)
   {
-    category: "Kill-Filter · 10",
+    category: "Kill-Filter · 08",
     section: "KILL-FILTER",
     text: "Welche Personen können NICHT über QCG gefördert werden? (Mehrfach-Auswahl)",
     type: "multi",
@@ -703,10 +1077,11 @@ const QUESTIONS = [
       "Auszubildende in laufender Ausbildung",
       "Geschäftsführer, die zugleich (Allein-)Gesellschafter sind"
     ],
-    correct: [0, 2, 4, 5]
+    correct: [0, 2, 4, 5],
+    explain: "Nicht förderfähig sind: Minijobber + Werkstudenten (keine SV-Pflicht), Auszubildende in laufender Ausbildung (sind ja schon in Qualifizierung), und GF die zugleich Alleingesellschafter sind (selbstständige Tätigkeit, keine Beschäftigung). Vollzeit + Teilzeit MIT SV-Pflicht sind okay."
   },
   {
-    category: "Kill-Filter · 11",
+    category: "Kill-Filter · 09",
     section: "KILL-FILTER",
     text: "Wie lange muss die letzte Berufsausbildung in der Regel zurückliegen?",
     type: "single",
@@ -716,10 +1091,11 @@ const QUESTIONS = [
       "Mindestens 2 Jahre",
       "Mindestens 5 Jahre"
     ],
-    correct: [2]
+    correct: [2],
+    explain: "Mindestens 2 Jahre — sonst greift die Sperrzeit. Wer die Ausbildung gerade frisch beendet hat, wird nicht gefördert. Wichtig: das ist ein Kill-Filter, den du in Step 02 (Qualify) sofort abfragen musst."
   },
   {
-    category: "Kill-Filter · 12",
+    category: "Kill-Filter · 10",
     section: "KILL-FILTER",
     text: "Was passiert, wenn die Maßnahme bereits begonnen hat, bevor der Antrag bei der BA liegt?",
     type: "single",
@@ -729,41 +1105,38 @@ const QUESTIONS = [
       "Antrag wird abgelehnt — hartes No-Go",
       "Die Förderung läuft trotzdem normal"
     ],
-    correct: [2]
+    correct: [2],
+    explain: "Hartes No-Go — der Antrag MUSS vor Maßnahmenbeginn bei der BA liegen. Wenn jemand sagt »wir haben schon angefangen«, ist die Förderung weg. Kein Spielraum, keine Nachträge. Direkt im Qualify abklären."
   },
   {
-    category: "Kill-Filter · 13",
-    section: "KILL-FILTER",
-    text: "Welche Maßnahme ist NICHT QCG-förderfähig?",
-    type: "single",
+    category: "Techcademy · 11",
+    section: "TECHCADEMY",
+    text: "Wie ist eine Techcademy-Maßnahme aufgebaut? (Mehrfach-Auswahl)",
+    type: "multi",
     options: [
-      "AZAV-zertifizierter KI-Marketing-Kurs mit 600 UE",
-      "Firmeninternes Onboarding mit firmenspezifischer Software",
-      "Berufsbegleitender Online-Kurs in HR-Management",
-      "Weiterbildung im Bereich Vorbereitende Buchhaltung"
+      "2 Phasen",
+      "1 durchgehende Phase ohne Unterteilung",
+      "500 Unterrichtseinheiten pro Phase",
+      "120 Unterrichtseinheiten gesamt",
+      "40 Wochen berufsbegleitend",
+      "Bei 100 % erfolgreichem Abschluss erhält der MA ein Zertifikat"
     ],
-    correct: [1]
-  },
-  {
-    category: "Kill-Filter · 14",
-    section: "KILL-FILTER",
-    text: "Wie viele Unterrichtseinheiten (UE) muss eine QCG-Maßnahme mindestens umfassen?",
-    type: "single",
-    options: ["40 UE", "60 UE", "80 UE", "120 UE"],
-    correct: [3]
+    correct: [0, 2, 4, 5],
+    explain: "Standard-Aufbau jeder Techcademy-Maßnahme: 2 Phasen mit je 500 Unterrichtseinheiten (Phase I: KI-Grundlagen, Phase II: Fachspezialisierung). Insgesamt 40 Wochen berufsbegleitend, online, 1–1,5 h pro Tag. Bei 100 % erfolgreichem Abschluss erhält der MA ein qualifiziertes Trägerzertifikat. Diese Eckdaten musst du im Schlaf können — danach fragt jeder Lead."
   },
 
   // TECHCADEMY (3)
   {
-    category: "Techcademy · 15",
+    category: "Techcademy · 12",
     section: "TECHCADEMY",
     text: "Wie lange dauert eine Techcademy-Maßnahme typischerweise?",
     type: "single",
     options: ["8 Wochen", "20 Wochen", "ca. 40 Wochen", "52 Wochen"],
-    correct: [2]
+    correct: [2],
+    explain: "Ca. 40 Wochen, berufsbegleitend. Das ist die Standard-Dauer für alle vier Spezialisierungen. Wichtig fürs Erwartungs-Management — keine Schnellkurse, aber auch nicht jahrelang."
   },
   {
-    category: "Techcademy · 16",
+    category: "Techcademy · 13",
     section: "TECHCADEMY",
     text: "Wie viel Lernzeit pro Tag wird für Techcademy-Maßnahmen empfohlen?",
     type: "single",
@@ -773,10 +1146,11 @@ const QUESTIONS = [
       "3–4 h",
       "6–8 h (Vollzeit-Freistellung)"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "1–1,5 h pro Tag — komplett online, flexibel einteilbar. Das ist der entscheidende Verkaufspunkt: Kein MA muss freigestellt werden, das läuft nebenher. Wenn ein Lead Vollzeit-Freistellung erwartet, sofort aufklären."
   },
   {
-    category: "Techcademy · 17",
+    category: "Techcademy · 14",
     section: "TECHCADEMY",
     text: "Welche der folgenden ist KEINE Techcademy-Spezialisierung?",
     type: "single",
@@ -786,12 +1160,13 @@ const QUESTIONS = [
       "KI-Vertriebs Manager",
       "KI-Kundenservice Manager"
     ],
-    correct: [2]
+    correct: [2],
+    explain: "Die vier Spezialisierungen sind: KI-HR, KI-Kundenservice, KI-Marketing und KI-Backoffice. Vertrieb gibt es nicht als eigenen Kurs. Wenn ein Lead nach Vertriebsschulung fragt — das geht über andere Programme, nicht über QCG mit Techcademy."
   },
 
   // SETTER FLOW (4)
   {
-    category: "Setter Flow · 18",
+    category: "Setter Flow · 15",
     section: "SETTER FLOW",
     text: "Welche Schritte musst du IMMER durchgehen, bevor du den Termin buchst? (Mehrfach-Auswahl)",
     type: "multi",
@@ -802,10 +1177,11 @@ const QUESTIONS = [
       "Persönliche Hobby-Smalltalk-Phase",
       "Erwartungs-Setting für den Termin"
     ],
-    correct: [0, 1, 2, 4]
+    correct: [0, 1, 2, 4],
+    explain: "Pflicht-Schritte sind: Opening + Pitch (01), Qualify (02), Vergütungs-Transparenz (03), Erwartungs-Setting (04). Hobby-Smalltalk ist NICHT Teil des Skripts — das verbrennt Zeit und wirkt unprofessionell. Halte dich strikt an die Reihenfolge."
   },
   {
-    category: "Setter Flow · 19",
+    category: "Setter Flow · 16",
     section: "SETTER FLOW",
     text: "Ein Lead sagt: »Ich muss noch mit meinem HR-Verantwortlichen sprechen.« Was ist die richtige Reaktion?",
     type: "single",
@@ -815,10 +1191,11 @@ const QUESTIONS = [
       "Trotzdem Termin buchen ohne HR",
       "»Dann ist das Thema wohl nichts für Sie«"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Sofort Name + Mail der HR-Person erfragen und beide gemeinsam zum Termin einladen. Niemals »Melden Sie sich nochmal« sagen — das verbrennt den Lead. Wenn du den Co-Entscheider nicht direkt mit reinholst, gibts einen Doppel-Termin oder gar keinen."
   },
   {
-    category: "Setter Flow · 20",
+    category: "Setter Flow · 17",
     section: "SETTER FLOW",
     text: "Wann ist der ideale Termin-Slot für den Closer?",
     type: "single",
@@ -828,10 +1205,11 @@ const QUESTIONS = [
       "In zwei Wochen",
       "Egal, Hauptsache irgendwann"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Morgen — so früh wie möglich. Jeder Tag Verzögerung erhöht das No-Show-Risiko. Wenn der Lead sagt »nächste Woche«, mit Knappheits-Hebel pushen: »eine Woche eher in Bearbeitung«. Aber nicht überdehnen."
   },
   {
-    category: "Setter Flow · 21",
+    category: "Setter Flow · 18",
     section: "SETTER FLOW",
     text: "Welche Aussage zur Vergütung (15 %) ist korrekt?",
     type: "single",
@@ -841,12 +1219,13 @@ const QUESTIONS = [
       "Nur im Erfolgsfall — wenn das Geld tatsächlich beim Kunden ankommt",
       "Wird vom Bildungsträger bezahlt"
     ],
-    correct: [2]
+    correct: [2],
+    explain: "15 % fallen nur an, wenn das Geld tatsächlich beim Kunden ankommt — kein Erfolg, keine Kosten. Keine Vorabkosten, keine Bearbeitungsgebühr. Diese Transparenz ist unser stärkster Verkaufshebel und MUSS in jedem Call kommuniziert werden."
   },
 
   // PFLICHT-INFO (2)
   {
-    category: "Pflicht-Info · 22",
+    category: "Pflicht-Info · 19",
     section: "PFLICHT-INFO",
     text: "Welche Pflicht-Informationen muss der Setter IMMER abfragen? (Mehrfach-Auswahl)",
     type: "multi",
@@ -858,10 +1237,11 @@ const QUESTIONS = [
       "Alleiniger Entscheider ja/nein",
       "Aktive Ausbildung im Unternehmen?"
     ],
-    correct: [0, 1, 2, 4, 5]
+    correct: [0, 1, 2, 4, 5],
+    explain: "Pflicht-Felder: Firmenname mit Rechtsform, Anzahl MA Vollzeit, MA in Büro/Verwaltung/Digital, Alleiniger Entscheider (ja/nein), Aktive Ausbildung im Unternehmen. Privates Hobby des GF ist KEIN Pflichtfeld — das ist Zeitverschwendung und unprofessionell."
   },
   {
-    category: "Pflicht-Info · 23",
+    category: "Pflicht-Info · 20",
     section: "PFLICHT-INFO",
     text: "Telefonnummer und E-Mail-Adresse des Leads…",
     type: "single",
@@ -871,12 +1251,13 @@ const QUESTIONS = [
       "Werden nur bei »interessanten« Leads erfasst",
       "Sind nicht wichtig für die CRM-Übergabe"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Kommen aus dem Lead-Intake — nochmal abfragen wirkt unprofessionell und stiehlt Call-Zeit. Wenn die Daten fehlen, beim Team Bescheid sagen statt im Call neu abzufragen."
   },
 
   // EINWAND-BEHANDLUNG (3)
   {
-    category: "Einwände · 24",
+    category: "Einwände · 21",
     section: "EINWAND-BEHANDLUNG",
     text: "Lead sagt: »Schicken Sie mir das mal per Mail.« Was ist die richtige Reaktion?",
     type: "single",
@@ -886,10 +1267,11 @@ const QUESTIONS = [
       "»Mail haben wir nicht, Sie müssen einen Termin machen«",
       "Auflegen ohne Antwort"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Klassischer Brushoff — niemals einfach Mail schicken und auflegen. Stattdessen anerkennen + reframen: »Eine generische PDF hilft Ihnen nicht — im Termin sehen Sie IHRE konkrete Summe.« Pull zurück zum Termin. Mail ist erst nach dem Termin sinnvoll."
   },
   {
-    category: "Einwände · 25",
+    category: "Einwände · 22",
     section: "EINWAND-BEHANDLUNG",
     text: "Lead sagt: »Klingt zu schön um wahr zu sein.« Wie reagierst du?",
     type: "single",
@@ -899,10 +1281,11 @@ const QUESTIONS = [
       "Den Call abbrechen, Lead ist verloren",
       "Garantien geben (»zu 100 % bewilligt«)"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Anerkennen + Transparenz: »Verstehe ich. Der Haken ist: es gibt keinen. 15 % nur im Erfolgsfall, sonst null.« Niemals widersprechen oder Garantien geben (»zu 100 % bewilligt« ist sogar rechtlich problematisch). Skepsis wird mit Transparenz entkräftet, nicht mit Versprechen."
   },
   {
-    category: "Einwände · 26",
+    category: "Einwände · 23",
     section: "EINWAND-BEHANDLUNG",
     text: "Wenn ein Einwand zweimal vom Lead kommt — was bedeutet das?",
     type: "single",
@@ -912,12 +1295,13 @@ const QUESTIONS = [
       "Ich muss länger und ausführlicher erklären",
       "Ich muss die Vergütung senken"
     ],
-    correct: [1]
+    correct: [1],
+    explain: "Echtes Nein — höflich beenden, nicht reinziehen. Setter Grundregel: Wer denselben Einwand zweimal bringt, hat kein Interesse. Weiteres Pushen verbrennt den Lead für die Zukunft und kostet dich Zeit. Lieber höflich aussteigen und im CRM mit Wiedervorlage vermerken."
   },
 
   // CODE OF CONDUCT (2)
   {
-    category: "Regelbuch · 27",
+    category: "Regelbuch · 24",
     section: "REGELBUCH",
     text: "Du bist krank am Montagmorgen. Was tust du?",
     type: "single",
@@ -927,10 +1311,11 @@ const QUESTIONS = [
       "Sofort vor Schichtbeginn melden, damit Ersatz organisiert werden kann",
       "Einen Kollegen bitten, später Bescheid zu sagen"
     ],
-    correct: [2]
+    correct: [2],
+    explain: "Sofort vor Schichtbeginn melden — damit Ersatz organisiert werden kann. Regelbuch-Regel 01. Nie während der Schicht, nie über Kollegen ausrichten. Termine die leer stehen kosten Geld und Vertrauen."
   },
   {
-    category: "Regelbuch · 28",
+    category: "Regelbuch · 25",
     section: "REGELBUCH",
     text: "Welche Handlungen führen zur sofortigen Trennung? (Mehrfach-Auswahl)",
     type: "multi",
@@ -942,7 +1327,8 @@ const QUESTIONS = [
       "Einen schlechten Tag haben",
       "Falsche Antworten an Leads geben statt ehrlich »weiß ich nicht« zu sagen"
     ],
-    correct: [0, 1, 2]
+    correct: [0, 1, 2],
+    explain: "Sofortige Trennung: Geheimhaltungsbruch (Skripte/Daten teilen), erfundene Calls/geschönte Zahlen, Toxizität im Team. Einen einzelnen Termin verlieren oder einen schlechten Tag haben gehört zum Job — dafür wird niemand getrennt. Falsche Antworten an Leads sind schlimm, aber nicht automatisch Trennungsgrund — Ehrlichkeit zugeben ist immer besser."
   }
 ];
 
@@ -953,7 +1339,8 @@ let state = {
   userName: "",
   current: 0,
   answers: [],
-  selected: []
+  selected: [],
+  revealed: false  // true once user clicked "Antwort prüfen"
 };
 
 // ═══════════════════════════════════════════
@@ -995,6 +1382,7 @@ $('btn-start').addEventListener('click', () => {
 function showQuestion() {
   const q = QUESTIONS[state.current];
   state.selected = [];
+  state.revealed = false;
 
   $('q-current').textContent = state.current + 1;
   $('q-total').textContent = QUESTIONS.length;
@@ -1007,6 +1395,9 @@ function showQuestion() {
   } else {
     $('q-multi').classList.add('hidden');
   }
+
+  // Hide feedback
+  $('q-feedback').classList.add('hidden');
 
   const fillPct = ((state.current) / QUESTIONS.length) * 100;
   $('progress-fill').style.width = fillPct + '%';
@@ -1024,10 +1415,12 @@ function showQuestion() {
   });
 
   $('btn-next').disabled = true;
-  $('btn-next').textContent = state.current === QUESTIONS.length - 1 ? 'Test beenden →' : 'Weiter →';
+  $('btn-next').textContent = 'Antwort prüfen';
 }
 
 function toggleOption(index, type) {
+  if (state.revealed) return;  // locked after reveal
+
   const opts = $('q-options').children;
 
   if (type === 'single') {
@@ -1048,29 +1441,76 @@ function toggleOption(index, type) {
 }
 
 $('btn-next').addEventListener('click', () => {
-  // Lock answer
-  state.answers.push([...state.selected]);
-
-  if (state.current < QUESTIONS.length - 1) {
-    state.current++;
-    showQuestion();
+  if (!state.revealed) {
+    // STAGE 1: Reveal the correct/wrong answer
+    revealAnswer();
   } else {
-    showResult();
+    // STAGE 2: Move on
+    state.answers.push([...state.selected]);
+
+    if (state.current < QUESTIONS.length - 1) {
+      state.current++;
+      showQuestion();
+    } else {
+      showResult();
+    }
   }
 });
+
+function revealAnswer() {
+  const q = QUESTIONS[state.current];
+  const opts = $('q-options').children;
+  const correctSet = new Set(q.correct);
+  const selectedSet = new Set(state.selected);
+
+  // Check if answer is correct
+  const isCorrect = correctSet.size === selectedSet.size &&
+                    [...correctSet].every(v => selectedSet.has(v));
+
+  // Mark each option
+  Array.from(opts).forEach((o, i) => {
+    o.classList.add('locked');
+    o.classList.remove('selected');
+    const isOptionCorrect = correctSet.has(i);
+    const wasSelected = selectedSet.has(i);
+
+    if (isOptionCorrect) {
+      o.classList.add('reveal-correct');
+    } else if (wasSelected) {
+      o.classList.add('reveal-wrong');
+    }
+  });
+
+  // Show feedback banner with explanation
+  const fb = $('q-feedback');
+  fb.classList.remove('hidden', 'correct', 'wrong');
+  if (isCorrect) {
+    fb.classList.add('correct');
+    $('fb-icon').textContent = '✓';
+    $('fb-label').textContent = 'Richtig';
+    $('fb-text').textContent = q.explain || 'Saubere Antwort. Weiter im Test.';
+  } else {
+    fb.classList.add('wrong');
+    $('fb-icon').textContent = '✗';
+    $('fb-label').textContent = 'Falsch — merk dir das hier';
+    $('fb-text').textContent = q.explain || 'Schau dir die richtige Antwort an und merke sie dir.';
+  }
+
+  // Update button
+  state.revealed = true;
+  $('btn-next').textContent = state.current === QUESTIONS.length - 1 ? 'Ergebnis ansehen →' : 'Nächste Frage →';
+}
 
 // ═══════════════════════════════════════════
 // RESULT
 // ═══════════════════════════════════════════
 function showResult() {
   let correct = 0;
-  const wrong = [];
 
   state.answers.forEach((answer, i) => {
     const q = QUESTIONS[i];
     const isCorrect = arraysEqual(answer.sort(), [...q.correct].sort());
     if (isCorrect) correct++;
-    else wrong.push({ index: i, given: answer, q });
   });
 
   const total = QUESTIONS.length;
@@ -1094,48 +1534,21 @@ function showResult() {
     $('result-sub').textContent = 'Du bist bereit für deinen ersten Call am Montag. Mach einen Screenshot deines Zertifikats und schicke ihn an die Teamleitung.';
 
     $('cert').classList.remove('hidden');
-    $('review').classList.add('hidden');
+    $('btn-retry').classList.add('hidden');
 
     $('cert-name').textContent = state.userName;
     $('cert-code').textContent = generateCode(state.userName);
     $('cert-date').textContent = formatDate(new Date());
   } else {
-    $('result-status').textContent = '✗ Noch nicht qualifiziert';
+    $('result-status').textContent = '✗ Nicht qualifiziert';
     $('result-headline').textContent = 'Nochmal.';
-    $('result-sub').textContent = 'Du brauchst 100 % um qualifiziert zu sein. Schau dir die falschen Antworten an, geh die Unterlagen nochmal durch und starte den Test erneut.';
+    $('result-sub').textContent = 'Du brauchst 100 % um qualifiziert zu sein. Geh die Unterlagen nochmal durch und starte den Test komplett neu — keine Abkürzungen.';
 
     $('cert').classList.add('hidden');
-    $('review').classList.remove('hidden');
-
-    renderReview(wrong);
+    $('btn-retry').classList.remove('hidden');
   }
 
   showScreen('result');
-}
-
-function renderReview(wrong) {
-  const list = $('review-list');
-  list.innerHTML = '';
-  wrong.forEach(w => {
-    const q = w.q;
-    const yourAnswers = w.given.map(i => q.options[i]).join(' · ');
-    const correctAnswers = q.correct.map(i => q.options[i]).join(' · ');
-
-    const el = document.createElement('div');
-    el.className = 'review-item';
-    el.innerHTML = `
-      <div class="review-item-q"><span class="review-num">Frage ${w.index + 1}</span>${q.text}</div>
-      <div class="review-block">
-        <div class="review-block-lbl your">Deine Antwort</div>
-        <div class="review-block-content wrong">${yourAnswers || '(keine Auswahl)'}</div>
-      </div>
-      <div class="review-block">
-        <div class="review-block-lbl correct">Richtig wäre</div>
-        <div class="review-block-content right">${correctAnswers}</div>
-      </div>
-    `;
-    list.appendChild(el);
-  });
 }
 
 function arraysEqual(a, b) {
@@ -1157,12 +1570,9 @@ function generateCode(name) {
 }
 
 function formatDate(d) {
-  const day = String(d.getDate()).padStart(2, '0');
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const year = d.getFullYear();
-  const h = String(d.getHours()).padStart(2, '0');
-  const m = String(d.getMinutes()).padStart(2, '0');
-  return `${day}.${month}.${year} · ${h}:${m} Uhr`;
+  const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                  'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+  return `${d.getDate()}. ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 // ═══════════════════════════════════════════
