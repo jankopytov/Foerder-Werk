@@ -828,7 +828,7 @@ body {
     <div class="info">
       <div class="info-title">⚡ So läuft der Test</div>
       <ul>
-        <li><strong>25 Fragen</strong> aus 7 Bereichen: QCG · Kill-Filter · Techcademy · Setter Flow · Pflicht-Info · Einwände · Regelbuch</li>
+        <li><strong>24 Fragen</strong> aus 7 Bereichen: QCG · Kill-Filter · Techcademy · Setter Flow · Pflicht-Info · Einwände · Regelbuch</li>
         <li><strong>Single Choice</strong> oder <strong>Mehrfach-Auswahl</strong> — bei Mehrfach: ALLE richtigen Antworten anklicken</li>
         <li>Kein Zurück — wer eine Antwort lockt, kann sie nicht ändern</li>
         <li>Am Ende: dein Score. <strong>100 % = qualifiziert</strong>, alles darunter = nochmal von vorn</li>
@@ -851,7 +851,7 @@ body {
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
       <div class="progress-meta">
-        <span>Frage <strong id="q-current">1</strong> / <strong id="q-total">25</strong></span>
+        <span>Frage <strong id="q-current">1</strong> / <strong id="q-total">24</strong></span>
         <span id="q-section">QCG GRUNDLAGEN</span>
       </div>
     </div>
@@ -1033,34 +1033,34 @@ const QUESTIONS = [
   {
     category: "Förderquoten · 05",
     section: "FÖRDERQUOTEN",
-    text: "Wie hoch kann die Förderung der Lehrgangskosten bei einem Kleinstbetrieb (unter 10 MA) maximal sein?",
+    text: "Wie hoch kann die Förderung der Lehrgangskosten bei einem Unternehmen unter 50 Mitarbeitern maximal sein?",
     type: "single",
     options: ["bis zu 25 %", "bis zu 50 %", "bis zu 75 %", "bis zu 100 %"],
     correct: [3],
-    explain: "Bis zu 100 % der Lehrgangskosten — das ist die OBERGRENZE bei Kleinstbetrieben. Wichtig: Es ist ein Ermessen der Agentur für Arbeit, im Einzelfall kann es auch weniger sein. Immer »BIS ZU 100 %« kommunizieren, nie als feste Zusage. Je kleiner der Betrieb, desto höher die mögliche Quote — Kleinstbetriebe sind unsere beste Zielgruppe."
+    explain: "Bis zu 100 % der Lehrgangskosten — das ist die OBERGRENZE bei kleinen Unternehmen unter 50 MA. Wichtig: Es ist ein Ermessen der Agentur für Arbeit, im Einzelfall kann es auch weniger sein. Immer »BIS ZU 100 %« kommunizieren, nie als feste Zusage. Je kleiner der Betrieb, desto höher die mögliche Quote — kleine Unternehmen sind unsere beste Zielgruppe."
   },
   {
     category: "Förderquoten · 06",
     section: "FÖRDERQUOTEN",
-    text: "Wie hoch kann der Arbeitsentgeltzuschuss bei einem Betrieb mit unter 10 Mitarbeitern maximal sein?",
+    text: "Wie hoch kann der Arbeitsentgeltzuschuss bei einem Unternehmen unter 50 Mitarbeitern maximal sein?",
     type: "single",
     options: ["bis zu 25 %", "bis zu 50 %", "bis zu 75 %", "100 % garantiert"],
     correct: [2],
-    explain: "Bis zu 75 % vom Bruttogehalt — das ist die OBERGRENZE bei Kleinstbetrieben unter 10 MA, nicht die feste Quote. Im Einzelfall kann der Zuschuss auch geringer ausfallen, je nach Konstellation und Ermessen der Agentur für Arbeit. Wichtig im Call: NIE »Sie bekommen 75 %« sagen, immer »BIS ZU 75 %«. Der genaue Wert wird im Termin vom Förderberater berechnet."
+    explain: "Bis zu 75 % vom Bruttogehalt — das ist die OBERGRENZE bei kleinen Unternehmen unter 50 MA, nicht die feste Quote. Im Einzelfall kann der Zuschuss auch geringer ausfallen, je nach Konstellation und Ermessen der Agentur für Arbeit. Wichtig im Call: NIE »Sie bekommen 75 %« sagen, immer »BIS ZU 75 %«. Der genaue Wert wird im Termin vom Förderberater berechnet."
   },
   {
     category: "Förderquoten · 07",
     section: "FÖRDERQUOTEN",
-    text: "Welche maximalen Förderquoten (Lehrgang / Arbeitsentgelt) gelten für einen Mittelständler mit 250–2.499 MA?",
+    text: "Welche maximalen Förderquoten (Lehrgang / Arbeitsentgelt) gelten für ein Unternehmen mit 50–499 Mitarbeitern?",
     type: "single",
     options: [
       "bis 100 % / bis 75 %",
       "bis 50 % / bis 50 %",
       "bis 25 % / bis 25 %",
-      "bis 15 % / bis 25 %"
+      "bis 15 % / bis 10 %"
     ],
-    correct: [2],
-    explain: "Mittelständler 250–2.499 MA bekommen BIS ZU 25 % Lehrgang und BIS ZU 25 % Arbeitsentgelt. Staffelung als Faustregel: bis 10 MA → bis 100/75, bis 250 MA → bis 50/50, bis 2.500 MA → bis 25/25, ab 2.500 MA → bis 15/25. Wichtig: Immer als Maximalwerte kommunizieren, nie als Zusage."
+    correct: [1],
+    explain: "Bei 50–499 Mitarbeitern gilt: bis zu 50 % Lehrgangskosten und bis zu 50 % Arbeitsentgeltzuschuss. Merksatz für die drei Gruppen: < 50 MA → bis 100 / 75 %, 50–499 MA → bis 50 / 50 %, ab 500 MA → bis 25 / 25 %. Wichtig: Immer als Maximalwerte kommunizieren, nie als Zusage. Die genaue Quote rechnet der Förderberater im Termin aus."
   },
 
   // KILL-FILTER (5)
@@ -1141,13 +1141,13 @@ const QUESTIONS = [
     text: "Wie viel Lernzeit pro Tag wird für Techcademy-Maßnahmen empfohlen?",
     type: "single",
     options: [
-      "0,5 h",
-      "1–1,5 h",
-      "3–4 h",
-      "6–8 h (Vollzeit-Freistellung)"
+      "10–20 Minuten",
+      "30–90 Minuten",
+      "3–4 Stunden",
+      "Vollzeit-Freistellung"
     ],
     correct: [1],
-    explain: "1–1,5 h pro Tag — komplett online, flexibel einteilbar. Das ist der entscheidende Verkaufspunkt: Kein MA muss freigestellt werden, das läuft nebenher. Wenn ein Lead Vollzeit-Freistellung erwartet, sofort aufklären."
+    explain: "Zwischen 30 und 90 Minuten pro Tag — komplett online, flexibel einteilbar. Das ist der entscheidende Verkaufspunkt: Kein MA muss freigestellt werden, das läuft nebenher. Wenn ein Lead Vollzeit-Freistellung erwartet, sofort aufklären — der MA bleibt fast vollständig im operativen Geschäft."
   },
   {
     category: "Techcademy · 14",
@@ -1183,20 +1183,6 @@ const QUESTIONS = [
   {
     category: "Setter Flow · 16",
     section: "SETTER FLOW",
-    text: "Ein Lead sagt: »Ich muss noch mit meinem HR-Verantwortlichen sprechen.« Was ist die richtige Reaktion?",
-    type: "single",
-    options: [
-      "»Klar, melden Sie sich nochmal wenn Sie's geklärt haben«",
-      "Name + Mail der HR-Person erfragen und beide direkt zum Termin einladen",
-      "Trotzdem Termin buchen ohne HR",
-      "»Dann ist das Thema wohl nichts für Sie«"
-    ],
-    correct: [1],
-    explain: "Sofort Name + Mail der HR-Person erfragen und beide gemeinsam zum Termin einladen. Niemals »Melden Sie sich nochmal« sagen — das verbrennt den Lead. Wenn du den Co-Entscheider nicht direkt mit reinholst, gibts einen Doppel-Termin oder gar keinen."
-  },
-  {
-    category: "Setter Flow · 17",
-    section: "SETTER FLOW",
     text: "Wann ist der ideale Termin-Slot für den Closer?",
     type: "single",
     options: [
@@ -1209,7 +1195,7 @@ const QUESTIONS = [
     explain: "Morgen — so früh wie möglich. Jeder Tag Verzögerung erhöht das No-Show-Risiko. Wenn der Lead sagt »nächste Woche«, mit Knappheits-Hebel pushen: »eine Woche eher in Bearbeitung«. Aber nicht überdehnen."
   },
   {
-    category: "Setter Flow · 18",
+    category: "Setter Flow · 17",
     section: "SETTER FLOW",
     text: "Welche Aussage zur Vergütung (15 %) ist korrekt?",
     type: "single",
@@ -1225,7 +1211,7 @@ const QUESTIONS = [
 
   // PFLICHT-INFO (2)
   {
-    category: "Pflicht-Info · 19",
+    category: "Pflicht-Info · 18",
     section: "PFLICHT-INFO",
     text: "Welche Pflicht-Informationen muss der Setter IMMER abfragen? (Mehrfach-Auswahl)",
     type: "multi",
@@ -1241,7 +1227,7 @@ const QUESTIONS = [
     explain: "Pflicht-Felder: Firmenname mit Rechtsform, Anzahl MA Vollzeit, MA in Büro/Verwaltung/Digital, Alleiniger Entscheider (ja/nein), Aktive Ausbildung im Unternehmen. Privates Hobby des GF ist KEIN Pflichtfeld — das ist Zeitverschwendung und unprofessionell."
   },
   {
-    category: "Pflicht-Info · 20",
+    category: "Pflicht-Info · 19",
     section: "PFLICHT-INFO",
     text: "Telefonnummer und E-Mail-Adresse des Leads…",
     type: "single",
@@ -1257,7 +1243,7 @@ const QUESTIONS = [
 
   // EINWAND-BEHANDLUNG (3)
   {
-    category: "Einwände · 21",
+    category: "Einwände · 20",
     section: "EINWAND-BEHANDLUNG",
     text: "Lead sagt: »Schicken Sie mir das mal per Mail.« Was ist die richtige Reaktion?",
     type: "single",
@@ -1271,7 +1257,7 @@ const QUESTIONS = [
     explain: "Klassischer Brushoff — niemals einfach Mail schicken und auflegen. Stattdessen anerkennen + reframen: »Eine generische PDF hilft Ihnen nicht — im Termin sehen Sie IHRE konkrete Summe.« Pull zurück zum Termin. Mail ist erst nach dem Termin sinnvoll."
   },
   {
-    category: "Einwände · 22",
+    category: "Einwände · 21",
     section: "EINWAND-BEHANDLUNG",
     text: "Lead sagt: »Klingt zu schön um wahr zu sein.« Wie reagierst du?",
     type: "single",
@@ -1285,23 +1271,23 @@ const QUESTIONS = [
     explain: "Anerkennen + Transparenz: »Verstehe ich. Der Haken ist: es gibt keinen. 15 % nur im Erfolgsfall, sonst null.« Niemals widersprechen oder Garantien geben (»zu 100 % bewilligt« ist sogar rechtlich problematisch). Skepsis wird mit Transparenz entkräftet, nicht mit Versprechen."
   },
   {
-    category: "Einwände · 23",
+    category: "Einwände · 22",
     section: "EINWAND-BEHANDLUNG",
     text: "Wenn ein Einwand zweimal vom Lead kommt — was bedeutet das?",
     type: "single",
     options: [
-      "Ich muss härter pushen",
-      "Es ist ein echtes Nein — höflich beenden, nicht reinziehen",
-      "Ich muss länger und ausführlicher erklären",
+      "Es ist ein wahrer Einwand — jetzt perfekt behandeln",
+      "Es ist ein echtes Nein — sofort höflich beenden",
+      "Ich muss härter pushen und Druck aufbauen",
       "Ich muss die Vergütung senken"
     ],
-    correct: [1],
-    explain: "Echtes Nein — höflich beenden, nicht reinziehen. Setter Grundregel: Wer denselben Einwand zweimal bringt, hat kein Interesse. Weiteres Pushen verbrennt den Lead für die Zukunft und kostet dich Zeit. Lieber höflich aussteigen und im CRM mit Wiedervorlage vermerken."
+    correct: [0],
+    explain: "Wenn ein Lead zweimal denselben Einwand bringt, ist das KEIN höflicher Brushoff mehr — das ist der echte Punkt, der ihn wirklich hindert. Jetzt zeigt sich Setter-Qualität: anerkennen, sauber reframen, mit Substanz auflösen. Genau dafür haben wir die Einwand-Bibliothek. Nicht aufgeben, aber auch nicht stumpf weiterpushen — gezielt diesen einen Einwand perfekt behandeln."
   },
 
   // CODE OF CONDUCT (2)
   {
-    category: "Regelbuch · 24",
+    category: "Regelbuch · 23",
     section: "REGELBUCH",
     text: "Du bist krank am Montagmorgen. Was tust du?",
     type: "single",
@@ -1315,7 +1301,7 @@ const QUESTIONS = [
     explain: "Sofort vor Schichtbeginn melden — damit Ersatz organisiert werden kann. Regelbuch-Regel 01. Nie während der Schicht, nie über Kollegen ausrichten. Termine die leer stehen kosten Geld und Vertrauen."
   },
   {
-    category: "Regelbuch · 25",
+    category: "Regelbuch · 24",
     section: "REGELBUCH",
     text: "Welche Handlungen führen zur sofortigen Trennung? (Mehrfach-Auswahl)",
     type: "multi",
